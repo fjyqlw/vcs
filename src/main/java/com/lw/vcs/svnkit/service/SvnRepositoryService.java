@@ -101,4 +101,8 @@ public class SvnRepositoryService {
     public List<SvnRepository> list() {
         return repositoryDao.list();
     }
+
+    public SvnRepository getById(String svnId) {
+       return repositoryDao.getById(svnId);
+    }
 }

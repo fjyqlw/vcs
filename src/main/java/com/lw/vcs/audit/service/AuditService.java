@@ -3,6 +3,7 @@ package com.lw.vcs.audit.service;
 import com.lw.vcs.audit.mapper.AuditUserDao;
 import com.lw.vcs.audit.model.AuditDetail;
 import com.lw.vcs.audit.model.AuditUser;
+import com.lw.vcs.auth.model.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,5 +41,9 @@ public class AuditService {
     }
     public List<AuditDetail> list(Integer state){
         return auditUserDao.list(state);
+    }
+
+    public List<User> listByKeyword(String keyword) {
+        return auditUserDao.listByKeyword(keyword);
     }
 }

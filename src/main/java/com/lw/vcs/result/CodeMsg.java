@@ -6,6 +6,7 @@ package com.lw.vcs.result;
  * @Description：
  */
 public class CodeMsg {
+
     private int code;
     private String msg;
 
@@ -55,6 +56,7 @@ public class CodeMsg {
     public static CodeMsg AUDIT_ID_NO_FOUND = new CodeMsg(800100,"申请记录不存在");
     public static CodeMsg AUDIT_USER_FAILD = new CodeMsg(800101,"审核用户失败");
     public static CodeMsg AUDIT_URL_ERROR = new CodeMsg(800102,"链接已失效");
+    public static CodeMsg APPLY_PARAMS_ERROR = new CodeMsg(800103,"参数错误");
 
     //角色
 

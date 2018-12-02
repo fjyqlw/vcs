@@ -9,7 +9,7 @@ public class SvnUserKey extends BasePrefix {
     /**
      * 过期时间（秒）
      */
-    public static int expireSeconds = 600;
+    public static int expireSeconds = 6000;
 
     public static final String COOKIE_NAME_TOKEN="token";
 

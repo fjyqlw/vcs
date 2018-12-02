@@ -27,4 +27,7 @@ public interface SvnRepositoryDao {
 
     @Select("SELECT * FROM T_BAS_SVN_REPO")
     List<SvnRepository> list();
+
+    @Select("SELECT * FROM T_BAS_SVN_REPO WHERE SVNID=#{svnId}")
+    SvnRepository getById(@Param("svnId") String svnId);
 }

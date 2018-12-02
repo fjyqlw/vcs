@@ -39,4 +39,9 @@ public interface AuditUserDao {
             " FROM T_BS_AUDIT_USER A JOIN t_bas_user B ON A.APPLYUSERID=B.USERID\n" +
             "LEFT JOIN t_bas_user C ON A.AUDITUSERID=C.USERID WHERE A.STATE=#{state}")
     List<AuditDetail> list(@Param("state") Integer state);
+
+    @Select("SELECT userId,username FROM t_bas_user " +
+            "WHERE upper(USERID) LIKE upper('%${keyword}%') " +
+            "OR upper(USERNAME) LIKE upper('%${keyword}%')")
+    List<User> listByKeyword(@Param("keyword") String keyword);
 }

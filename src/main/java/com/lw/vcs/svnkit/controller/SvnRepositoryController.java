@@ -64,4 +64,17 @@ public class SvnRepositoryController {
         return Result.success(list);
 
     }
+
+    @ApiOperation(value = "查询资源库")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "svnId", value = "svnId", required = true, example = "523605981e514dd187782e84c5b8c736"),
+    })
+    @PostMapping("get/{svnId}")
+    public Result get(@PathVariable("svnId") String svnId) {
+
+        SvnRepository svnRepository = repositoryService.getById(svnId);
+
+        return Result.success(svnRepository);
+
+    }
 }
