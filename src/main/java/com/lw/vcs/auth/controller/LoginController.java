@@ -41,7 +41,8 @@ public class LoginController {
     @ApiOperation(value = "登录", notes = "权限验证")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "手机号", example = "18389386309"),
-            @ApiImplicitParam(name = "password", value = "密码", example = "f62dd3e57b3073ef935e85f7d2e267be")
+            @ApiImplicitParam(name = "password", value = "密码", example = "f62dd3e57b3073ef935e85f7d2e267be"),
+            @ApiImplicitParam(name = "remember", value = "记住密码", example = "false")
     })
     @AuthIgnore
     @RequestMapping(value = "login", method = RequestMethod.POST)

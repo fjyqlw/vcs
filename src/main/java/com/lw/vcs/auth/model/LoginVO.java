@@ -17,6 +17,7 @@ public class LoginVO {
     @NotNull(message = "密码不能为空")
     @Length(min = 32,max = 32,message = "密码参数非法")
     private String password;
+    private Boolean remember = false;
 
     public String getUserId() {
         return userId;
@@ -32,5 +33,13 @@ public class LoginVO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Boolean getRemember() {
+        return remember;
+    }
+
+    public void setRemember(Boolean remember) {
+        this.remember = remember;
     }
 }

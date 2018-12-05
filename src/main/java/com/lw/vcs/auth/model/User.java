@@ -31,6 +31,7 @@ public class User {
     private Integer state;
 
     private String token;
+    private Boolean remember = false;
 
     public Integer getState() {
         return state;
@@ -125,5 +126,13 @@ public class User {
         this.salt = null;
         this.password = null;
         return this;
+    }
+
+    public Boolean getRemember() {
+        return remember;
+    }
+
+    public void setRemember(Boolean remember) {
+        this.remember = remember;
     }
 }

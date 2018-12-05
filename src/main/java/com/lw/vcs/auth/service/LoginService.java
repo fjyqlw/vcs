@@ -37,6 +37,7 @@ public class LoginService {
 
     @Autowired
     private RedisService redisService;
+    private int second_day_3 = 60 * 60 * 24 * 3;
 
 
     public User login(HttpServletResponse response, LoginVO loginVO) {
@@ -64,9 +65,15 @@ public class LoginService {
         if (!dbPass.equals(dbPass2)) {
             throw new GlobalExceptopn(CodeMsg.PASSWORD_ERROR);
         }
+        int second = UserKey.expireSeconds;
+        //记住密码3天
+        if(loginVO.getRemember()) {
+            second = second_day_3;
+            user.setRemember(true);
+        }
 
         String token = UUIDUtil.getUUID();
-        addCookie(response, token, user);
+        addCookie(response, token, user, second);
 
         user.setToken(token)
         .setNoAuthData();
@@ -91,7 +98,12 @@ public class LoginService {
 
         User user = redisService.get(UserKey.token, token, User.class);
 
-        addCookie(response, token, user);
+        if(user.getRemember()) {
+            Long ttl = redisService.ttl(UserKey.token, token);
+            if(ttl < UserKey.expireSeconds) {
+                addCookie(response, token, user,UserKey.expireSeconds);
+            }
+        }
 
         return user;
     }
@@ -122,9 +134,8 @@ public class LoginService {
         return token;
     }
 
-    private void addCookie(HttpServletResponse response, String token, User user) {
-
-        redisService.set(UserKey.token, token, user);
+    private void addCookie(HttpServletResponse response, String token, User user,int second) {
+        redisService.set(UserKey.token, token, user,second);
 
         Cookie cookie = new Cookie(UserKey.COOKIE_NAME_TOKEN, token);
         cookie.setMaxAge(UserKey.token.expireSeconds());

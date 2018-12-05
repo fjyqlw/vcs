@@ -80,6 +80,38 @@ public class RedisService {
     }
 
     /**
+     * 设置对象
+     * @param prefix
+     * @param key
+     * @param value
+     * @param <T>
+     * @return
+     */
+    public <T> boolean set(KeyPrefix prefix,String key,T value,int second){
+        Jedis jedis = null;
+
+        try{
+            jedis = jedisPool.getResource();
+            String valueStr = beanToString(value);
+
+            if(null == valueStr || valueStr.length() <= 0){
+                return false;
+            }
+
+            String realKey = prefix.getPrefix() + key;
+
+            if(second <= 0){
+                jedis.set(realKey,valueStr);
+            }else{
+                jedis.setex(realKey,second,valueStr);
+            }
+
+            return true;
+        }finally {
+            returnToPool(jedis);
+        }
+    }
+    /**
      * 判断key是否存在
      * @param prefix
      * @param key
@@ -152,6 +184,25 @@ public class RedisService {
             String realKey = prefix.getPrefix() + key;
 
             return jedis.expire(realKey,expireSeconds);
+        }finally {
+            returnToPool(jedis);
+        }
+    }
+    /**
+     * 减少值
+     * @param prefix
+     * @param key
+     * @param <T>
+     * @return
+     */
+    public <T> Long ttl(KeyPrefix prefix,String key){
+        Jedis jedis = null;
+
+        try {
+            jedis = jedisPool.getResource();
+            String realKey = prefix.getPrefix() + key;
+
+            return jedis.ttl(realKey);
         }finally {
             returnToPool(jedis);
         }
